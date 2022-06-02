@@ -1,0 +1,23 @@
+# Ingress to be controlled by the ingress controller being deployed
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: bailey-react-ingress
+  labels:
+    app: bailey-react-app-ingress
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kuberrnetes.io/target-type: instance
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: bailey-react-app-nodeport
+            port:
+              number: 3000

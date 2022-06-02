@@ -1,0 +1,33 @@
+# This yaml will deploy the image we have pushed into our repository onto the K8s cluster as well as a NodePort for the load balancer to hit
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bailey-react-deployment
+spec:
+  selector:
+    matchLabels:
+      app: bailey-react-app
+  replicas: 1
+  template:
+    metadata: 
+      labels:
+        app: bailey-react-app
+    spec:
+      containers:
+        - name: bailey-react-app
+          image: public.ecr.aws/g1f2n3m1/react_example_app:latest
+          ports:
+            - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bailey-react-app-nodeport
+spec:
+  type: NodePort
+  selector:
+    app: bailey-react-app
+  ports:
+    - port: 3000
+      targetPort: 3000

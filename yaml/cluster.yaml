@@ -1,0 +1,14 @@
+# Yaml to create the cluster
+
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: Bailey-devops
+  region: ap-southeast-2
+
+nodeGroups:
+  - name: NodeGroup1
+    instanceType: t3.small
+    desiredCapacity: 4
+    volumeSize: 10
